@@ -18,7 +18,29 @@ void ex1()
 
 namespace ex2
 {
+
 	long int rez = 0;
+
+	void GetFileList(LPTSTR sPath, LPTSTR sExt, LPTSTR sEXT);
+
+	int ex2(){
+
+		//Поскольку sPath и sExt и sEXT одинаковы во всех вызовах GetFileList, их можно было бы сделать
+		//глобальными, но я так оставил. 
+		char sPath[MAX_PATH] = "C:";
+
+		//Обратить  внимание на размер массива!
+		char sExt[10] = "txt";
+		char sEXT[10] = "TXT";
+		GetFileList(sPath, sExt, sEXT);
+		//Портит всё дело: Если перенаправлять в файл с консоли, то полуачается, что в консол ведут 
+		//запись два разных потока- тот,который нужент и этот,который записывает "Для продлжения нажмите любую
+		//клавишу" и эта надпись вклинивается в серёдку и портит всё дело
+		printf("rez= %d\n", rez);
+		system("PAUSE");
+		return 0;
+	}
+
 	void GetFileList(LPTSTR sPath, LPTSTR sExt, LPTSTR sEXT) {
 
 		WIN32_FIND_DATA pFILEDATA;
@@ -61,41 +83,14 @@ namespace ex2
 							CharToOem(pFILEDATA.cFileName, pFILEDATA.cFileName);
 							printf("%s\n", pFILEDATA.cFileName);
 							rez++;
+							FILE *out = fopen("booklist.txt", "a");
+							fprintf(out, "%s\%s\n", sPath, pFILEDATA.cFileName);
 						}
 					}
 				}
 			} while (FindNextFile(hFile, &pFILEDATA));
 		}
 	}
-
-	void ex2()
-	{
-
-
-
-		void GetFileList(LPTSTR sPath, LPTSTR sExt, LPTSTR sEXT);
-
-
-
-		//Поскольку sPath и sExt и sEXT одинаковы во всех вызовах GetFileList, их можно было бы сделать
-		//глобальными, но я так оставил. 
-		char sPath[MAX_PATH] = "E:\\Microsoft_Visual_Studio_9.0";
-//		char sPath[MAX_PATH]= "C:\\vso_moio";
-//		char sPath[MAX_PATH]= "C:\\vso_moio";
-
-		//Обратить  внимание на размер массива!
-		char sExt[10] = "exe";
-		char sEXT[10] = "EXE";
-		GetFileList(sPath, sExt, sEXT);
-		//Портит всё дело: Если перенаправлять в файл с консоли, то полуачается, что в консол ведут 
-		//запись два разных потока- тот,который нужент и этот,который записывает "Для продлжения нажмите любую
-		//клавишу" и эта надпись вклинивается в серёдку и портит всё дело
-		printf("rez= %d\n", rez);
-		system("PAUSE");
-	}
-
-
-
 }
 using namespace std;
 void ex3()
