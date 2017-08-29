@@ -3,11 +3,11 @@
  
 int main(){
         WIN32_FIND_DATA FindFileData;
-        HANDLE hf = FindFirstFile("c:\\*",&FindFileData);
+        HANDLE hf = FindFirstFile(L"c:\\*", &FindFileData);
         if(hf != INVALID_HANDLE_VALUE){
                 do{
                     if(FindFileData.dwFileAttributes&FILE_ATTRIBUTE_DIRECTORY)
-                        printf("%s\n",FindFileData.cFileName);
+                        printf("%s\n", FindFileData.cFileName);
  
                 }
                 while(FindNextFile(hf,&FindFileData));

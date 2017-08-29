@@ -1,4 +1,4 @@
-/ infotest1.cpp: определяет точку входа для консольного приложения.
+// infotest1.cpp: определяет точку входа для консольного приложения.
 //
 
 #include "stdafx.h"
@@ -11,7 +11,7 @@ void main()
 {
 	WIN32_FIND_DATA FindFileData;
 	HANDLE hf;
-	hf=FindFirstFile("c:\\*", &FindFileData);
+	hf=FindFirstFile(L"c:\\*", &FindFileData);
 	if (hf!=INVALID_HANDLE_VALUE)
 	{
 		do
